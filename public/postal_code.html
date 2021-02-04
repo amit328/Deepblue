@@ -40,8 +40,9 @@
   <h1>Data Selfie App</h1>
   <div><a href="/index.html">enter</a> | <a href="/all.html">list</a></div>
   <p>
-    latitude: <span id="latitude"></span>&deg;<br />
-    longitude: <span id="longitude"></span>&deg;
+    postal_code:<input type="text" id="postal_code" > <span ></span>&deg;<br />
+    <!-- state:<input type="text" id="state" > </span>&deg;
+    country:<input type="text" id="country" > </span>&deg; -->
   </p>
   <p>
     The weather here is<span id="summary"></span>with a temperature of<span id="temperature"></span>degrees farenheit.
@@ -54,65 +55,83 @@
   <div><a href="/index.html">enter</a> | <a href="/all.html">list</a></div>
   <div id="checkinMap"></div>
   <div id="map"></div>
-  <script src="logs.js"></script>
+  <!-- <script src="logs.js"></script> -->
 
-  <button id="submit">submit</button>
-  <script>
-    let lat, lon,air,weather;
-   
+  <button id="submit" >submit</button>
+  <script src="./postal_code.js"></script>
+  <script >
 
-    if ('geolocation' in navigator) {
-      console.log('geolocation available');
-      navigator.geolocation.getCurrentPosition(async position => {
-        try{
-        lat = position.coords.latitude;
-        lon = position.coords.longitude;
-        document.getElementById('latitude').textContent = lat;
-        document.getElementById('longitude').textContent = lon;
+    let postal_code, country,air,weather;
+    async function postal_code1(){
+      // lat = position.coords.latitude;
+      //   lon = position.coords.longitude;
+        postal_code = document.getElementById('postal_code').value;
+        // state=document.getElementById('state').value;
+        // country= document.getElementById('country').value;
         // const api_url=`https://api.weatherbit.io/v2.0/current/airquality?lat=${lat}&lon=${lon}&key=c39e8bc08f7f42769ff7af360eb0cfd7`;
-        const api_url = `weather/${lat},${lon}`;
+        const api_url = `weather2/${postal_code}`;
         const response = await fetch(api_url);
         const json = await response.json();
         console.log('sdfsd', json);
-        weather =json.weather.data.current.weather;
-         air = json.air_quality.data[0];
-        //  console.log('adi', json);
+        weather =json.weather;
+         //air = json.air_quality.results[0].measurements[0];
       // document.getElementById('summary').textContent = json.data[0].aqi;
-      document.getElementById('temperature').textContent = weather.ts;
-      document.getElementById('aq_parameter').textContent = air.parameter;
-      document.getElementById('aq_value').textContent = air.value;
-      document.getElementById('aq_unit').textContent = air.unit;
-      document.getElementById('aq_date').textContent = air.lastUpdated;
-      
-      
- 
-
-      // console.log(json);
-      
-      console.log(json);
-        }catch(error){
-           // console.error(error);
-          console.log('something went wrong');
-          air={value:-1};
-          document.getElementById('aq_value').textContent='NO DATA'
-        }
-        const data = { lat, lon,weather,air };
+      document.getElementById('temperature').textContent = weather.data[0].aqi;
+      // document.getElementById('aq_parameter').textContent = air.parameter;
+      // document.getElementById('aq_value').textContent = air.value;
+      // document.getElementById('aq_unit').textContent = air.unit;
+      // document.getElementById('aq_date').textContent = air.lastUpdated;
+      console.log('amit');
+      const data={weather};
       const options = {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
-      };
-      const db_response = await fetch('/api', options);
+      };  
+      const db_response = await fetch('/api_postal_code', options);
       const db_json = await db_response.json();
-      console.log(db_json);
-      });
-    } else {
-      console.log('geolocation not available');
-    }
+      getData();
+    };
+    
+    document.getElementById('submit').addEventListener('click',postal_code1);
+    // if ('geolocation' in navigator) {
+    //   // console.log('geolocation available');
+    //   navigator.geolocation.getCurrentPosition(async position => {
+    //     try{
+        
+    
+ 
+
+    //   // console.log(json);
+      
+    //   console.log(json);
+    //     }catch(error){
+    //        // console.error(error);
+    //       console.log('something went wrong');
+    //       air={value:-1};
+    //       document.getElementById('aq_value').textContent='NO DATA'
+    //     }
+    //     const data = { lat, lon,weather,air };
+    //   const options = {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify(data)
+    //   };
+    //   const db_response = await fetch('/api', options);
+    //   const db_json = await db_response.json();
+    //   console.log(db_json);
+    //   });
+    // } else {
+    //   console.log('geolocation not available');
+    // }
+    
   </script>
-  <script src="google.js"></script>
+
+  <!-- <script src="google.js"></script> -->
 </body>
 
 </html>
