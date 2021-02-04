@@ -9,6 +9,11 @@ tiles.addTo(mymap);
 
 getData();
 
+  
+function AutoRefresh( t ) {
+   setTimeout("location.reload(true);", t);
+}
+
 async function getData() {
   const response = await fetch('/api_forecast');
   const data = await response.json();

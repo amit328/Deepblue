@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
   crossorigin=""/>
@@ -36,7 +37,7 @@
   </style>
 </head>
 
-<body>
+<body >
   <h1>Data Selfie App</h1>
   <div><a href="/index.html">enter</a> | <a href="/all.html">list</a></div>
   <p>
@@ -54,9 +55,23 @@
   <div><a href="/index.html">enter</a> | <a href="/all.html">list</a></div>
   <div id="checkinMap"></div>
   <div id="map"></div>
-  <script src="logs_forecast.js"></script>
+  <div id="block1">
+  <script  src="logs_forecast.js"></script>
 
+</div>
   <button id="submit">submit</button>
+  <script type="text/javascript">
+    window.onload = setupRefresh;
+    function setupRefresh()
+    {
+        setInterval("refreshBlock();",3000);
+    }
+    
+    function refreshBlock()
+    {
+       $('#block1').load("index_forecast.html");
+    }
+  </script>
   <script>
     let lat, lon,air,weather;
    
@@ -85,7 +100,6 @@
       document.getElementById('aq_date').textContent = air.lastUpdated;
       
       
- 
 
       // console.log(json);
       

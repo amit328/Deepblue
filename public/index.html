@@ -54,9 +54,22 @@
   <div><a href="/index.html">enter</a> | <a href="/all.html">list</a></div>
   <div id="checkinMap"></div>
   <div id="map"></div>
+  <div>
   <script src="logs.js"></script>
-
+</div id="block1">
   <button id="submit">submit</button>
+  <script type="text/javascript">
+    window.onload = setupRefresh;
+    function setupRefresh()
+    {
+        setInterval("refreshBlock();",3000);
+    }
+    
+    function refreshBlock()
+    {
+       $('#block1').load("index.html");
+    }
+  </script>
   <script>
     let lat, lon,air,weather;
    
